@@ -15,29 +15,29 @@ import java.util.logging.Logger;
  */
 public class GrafoProcedencias extends Thread {
 
-    Semaphore semaforoPropio = new Semaphore(0);
-    Semaphore[] semaforosSecundarios;
+    Semaphore semaforo = new Semaphore(0);
+    Semaphore[] semaforos;
 
     private int id, recursos;
 
-    public GrafoProcedencias(int id, int recursos, Semaphore... semafSecundarios) {
-        this.semaforosSecundarios = semafSecundarios;
+    public GrafoProcedencias(int id, int recursos, Semaphore... semaforos) {
+        this.semaforos = semaforos;
         this.id = id;
         this.recursos = recursos;
     }
 
     public Semaphore getSemaphore() {
-        return semaforoPropio;
+        return semaforo;
     }
 
     @Override
     public void run() {
         try {
-            semaforoPropio.acquire(recursos);
+            semaforo.acquire(recursos);
             System.out.println("Proceso " + id + " Trabajando");
 
-            if (semaforosSecundarios != null) {
-                for (Semaphore semafSecundario : semaforosSecundarios) {
+            if (semaforos != null) {
+                for (Semaphore semafSecundario : semaforos) {
                     semafSecundario.release();
                 }
             }
