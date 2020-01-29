@@ -8,7 +8,7 @@ package grafo;
 
 /**
  *
- * @author Stream
+ * @author Joaquin Pereira Chapel
  */
 public class Grafo {
 
